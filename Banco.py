@@ -1,5 +1,4 @@
 import psycopg2
-
 class Banco():
     
     def __init__(self, tbName):
@@ -20,11 +19,17 @@ class Banco():
         
     def insertOne(self, idSensor, variavel, medicao, unidade, registro, latitutde, longitude):
         self.cursor.execute("INSERT INTO {} VALUES ({},'{}',{},'{}','{}',{},{}) RETURNING idSensor;".format(self.tbName, idSensor, variavel, medicao, unidade, registro, latitutde, longitude))    
-        return self.cursor.fetchone()
+        return self.cursor.fetchone()      
     
-    def updateOne(self, idSensor, variavel, medicao, unidade, registro, latitutde, longitude):
-        self.cursor.execute("UPDATE {} SET variavel='{}', medicao={}, unidade='{}', registro='{}', latitudade={}, longitude={} WHERE idSensor = {};".format(self.tbName, variavel, medicao, unidade, registro, latitutde, longitude,idSensor))
+    def updateOne(self, idSensor, variavel, medicao, unidade, registro, latitude, longitude):
+        self.cursor.execute("UPDATE {} SET variavel='{}', medicao={}, unidade='{}', registro='{}', latitude={}, longitude={} WHERE idSensor = {};".format(self.tbName, variavel, medicao, unidade, registro, latitude, longitude,idSensor))
         
     def commitChanges(self):
         self.conn.commit()
+    
+    def closeConnection(self):
+        self.conn.close()
+    
+    def rollbackConnection(self):
+        self.conn.rollback()
         
