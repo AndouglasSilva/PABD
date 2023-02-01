@@ -1,4 +1,6 @@
 from tkinter import *
+from Relatorio import *
+import pandas as pd
 
 class Controller():
     
@@ -9,7 +11,7 @@ class Controller():
         self.view.setCommandInsert(self.insertSensor)
         self.view.setCommandDelete(self.deleteSensor)
         self.view.setCommandUpdate(self.updateSensor)
-        
+        self.view.setCommandGenerateReport(self.gerarRelatorio)
         self.view.setCommandCommit(self.commitBanco)
         
     def buscarSensor(self):
@@ -32,6 +34,7 @@ class Controller():
     def deleteSensor(self):
         idSensor = self.view.txtidSensor.get()
         self.model.delete_one_sensor(idSensor)
+        self.view.logDelete()
         
     def updateSensor(self):
         idSensor = self.view.txtidSensor.get()
@@ -47,3 +50,11 @@ class Controller():
                 
     def commitBanco(self):
         self.model.commit_changes()
+        
+    def gerarRelatorio(self):
+        #Teste usando DataFrame
+        df = pd.DataFrame(self.model.read_all_sensors());
+        df.columns = ["idSensor", "variavel","valor", "unidade", "registro", "latitude", "longitude"]
+        print(df)
+        Relatorio.build_pdf(df)
+        

@@ -134,6 +134,9 @@ class View():
         font=self.fonte, width=12)
         #self.bntExcluir["command"] = self.atualizarBD
         self.bntAtualizarBanco.pack(side=LEFT)
+        
+        self.btnGerarRelatorio = Button(self.container8, text="Gerar Relatório", font=self.fonte, width=12)
+        self.btnGerarRelatorio.pack(side=LEFT)
 
         self.lblmsg = Label(self.container9, text="")
         self.lblmsg["font"] = ("Verdana", "9", "italic")
@@ -155,6 +158,9 @@ class View():
     def setCommandCommit(self, method):
         self.bntAtualizarBanco["command"] = method
     
+    def setCommandGenerateReport(self, method):
+        self.btnGerarRelatorio["command"] = method
+    
     def resetAllFieds(self):
         self.txtidSensor.delete(0, END)
         self.txtVariavel.delete(0, END)
@@ -169,6 +175,9 @@ class View():
     
     def logUpdate(self, idSensor):
         self.lblmsg["text"] = "Sensor {} atualizado!".format(idSensor);
+    
+    def logDelete(self):
+        self.lblmsg["text"] = "Sensor removido com sucesso!";
     
     def updateBySearch(self, sensor):
         if(sensor):
@@ -185,3 +194,5 @@ class View():
         else:
             self.lblmsg["text"] = "Não existe esse sensor!"
             self.resetAllFieds()
+
+    

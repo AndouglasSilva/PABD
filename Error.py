@@ -29,3 +29,7 @@ class Error:
         print('Error type:', err_type, 'PgCode: ', err.pgcode)
         if(err.pgcode == errorcodes.INVALID_DATETIME_FORMAT):
             return "Por favor, insira um valor de data válido! Ex.: 2023-01-28 22:20"
+        if(err.pgcode == errorcodes.UNIQUE_VIOLATION):
+            return "Sensor já existe na tabela."
+        
+        
